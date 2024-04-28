@@ -10,9 +10,6 @@ The backend system for "Incoherent", a what's the gibberish game, is designed to
 - npm or yarn
 
 ### Installation
-
-
-### Installation
 1. **Clone the repository to your local machine.**
 
     ```
@@ -30,12 +27,12 @@ The backend system for "Incoherent", a what's the gibberish game, is designed to
     ```
     npm install
     ```
+
+    or if you use yarn, 
     
-     or if you use yarn, 
-     
-     ```
-     yarn install
-     ```
+    ```
+    yarn install
+    ```
 
 4. Set up environment variables. Create a **`.env`** file in the root of your project and add the following variables:
 
