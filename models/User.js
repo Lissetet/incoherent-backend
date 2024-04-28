@@ -133,14 +133,14 @@ module.exports = (sequelize) => {
 
   User.associate = (models) => {
     User.hasMany(models.Game, {
-      as: 'user',
+      as: 'games',
       foreignKey: {
         fieldName: 'userId',
         allowNull: false,
       },
     });
     User.hasMany(models.Message, {
-      as: 'user',
+      as: 'messages',
       foreignKey: {
         fieldName: 'userId',
         allowNull: false,
