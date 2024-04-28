@@ -27,8 +27,8 @@ router.post('/', authenticateUser, asyncHandler(async (req, res) => {
     if (!currentUser?.admin) {
       res.status(403).end()
     }
-    const Card = await Card.create(req.body);
-    res.status(201).location(`/api/cards/${Card.id}`).end();
+    const card = await Card.create(req.body);
+    res.status(201).location(`/api/cards/${card.id}`).end();
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
       const errors = error.errors.map(err => err.message);
@@ -46,9 +46,9 @@ router.put('/:id', authenticateUser, asyncHandler(async (req, res) => {
     if (!currentUser?.admin) {
       res.status(403).end()
     }
-    const Card = await Card.findByPk(req.params.id);
-    if (Card) {
-        await Card.update(req.body);
+    const card = await Card.findByPk(req.params.id);
+    if (card) {
+        await card.update(req.body);
         res.status(204).end();
     } else {
       res.status(404).json({ message: "Card not found" });
@@ -69,9 +69,9 @@ router.delete('/:id', authenticateUser, asyncHandler(async (req, res) => {
   if (!currentUser?.admin) {
     res.status(403).end()
   }
-  const Card = await Card.findByPk(req.params.id);
-  if (Card) {
-    await Card.destroy();
+  const card = await Card.findByPk(req.params.id);
+  if (card) {
+    await card.destroy();
     res.status(204).end();
   } else {
     res.status(404).json({ message: "Card not found" });

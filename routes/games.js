@@ -20,20 +20,20 @@ router.get('/', authenticateUser, asyncHandler(async (req, res) => {
 
 // Returns a game by ID for the authenticated user
 router.get('/:id', authenticateUser, asyncHandler(async (req, res) => {
-  const Game = await Game.findOne({
+  const game = await Game.findOne({
     where: {
       id: req.params.id,
       userId: req.currentUser.id,
     },
   });
-  Game ? res.json(Game) : res.status(404).end();
+  game ? res.json(game) : res.status(404).end();
 }));
 
 // Creates a new game
 router.post('/', authenticateUser, asyncHandler(async (req, res) => {
   try {
-    const Game = await Game.create(req.body);
-    res.status(201).location(`/api/games/${Game.id}`).json(Game).end();
+    const game = await Game.create(req.body);
+    res.status(201).location(`/api/games/${game.id}`).json(game).end();
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
       const errors = error.errors.map(err => err.message);
@@ -47,14 +47,14 @@ router.post('/', authenticateUser, asyncHandler(async (req, res) => {
 // Updates a game
 router.put('/:id', authenticateUser, asyncHandler(async (req, res) => {
   try {
-    const Game = await Game.findByPk(req.params.id);
+    const game = await Game.findByPk(req.params.id);
     const { currentUser } = req
 
-    if (Game) {
-      if (currentUser.id !== Game.userId ) {
+    if (game) {
+      if (currentUser.id !== game.userId ) {
         res.status(403).end()
       } else {
-        await Game.update(req.body);
+        await game.update(req.body);
         res.status(204).end();
       }
     } else {
@@ -115,14 +115,14 @@ router.put('/:id/addPlay', authenticateUser, asyncHandler(async (req, res) => {
 
 // Deletes a game
 router.delete('/:id', authenticateUser, asyncHandler(async (req, res) => {
-  const Game = await Game.findByPk(req.params.id);
+  const game = await Game.findByPk(req.params.id);
   const { currentUser } = req
 
-  if (Game) {
-    if (currentUser.id !== Game.userId) {
+  if (game) {
+    if (currentUser.id !== game.userId) {
       res.status(403).end()
     } else {
-      await Game.destroy();
+      await game.destroy();
       res.status(204).end();
     }
   } else {
