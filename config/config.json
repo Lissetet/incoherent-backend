@@ -1,0 +1,23 @@
+{
+  "development": {
+    "dialect": "postgres",
+    "logging": false,
+    "use_env_variable": "DEV_DATABASE_URL"
+  },
+  "test": {
+    "dialect": "postgres",
+    "logging": false,
+    "use_env_variable": "TEST_DATABASE_URL"
+  },
+  "production": {
+    "dialect": "postgres",
+    "logging": false,
+    "use_env_variable": "DATABASE_URL",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}
