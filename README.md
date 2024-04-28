@@ -81,10 +81,10 @@ The backend system for "Incoherent", a what's the gibberish game, is designed to
 * **DELETE `/cards/:id`** - Delete a card by ID.
 
 ### Messages 
-* **GET `/events`** - Retrieve all messages.
-* **GET `/events/:id`** - Retrieve a single message by ID.
-* **POST `/events`** - Create a new message.
-* **DELETE `/events/:id`** - Delete a message by ID.
+* **GET `/messages`** - Retrieve all messages.
+* **GET `/messages/:id`** - Retrieve a single message by ID.
+* **POST `/messages`** - Create a new message.
+* **DELETE `/messages/:id`** - Delete a message by ID.
 
 ## Development
 

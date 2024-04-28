@@ -139,6 +139,13 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     });
+    User.hasMany(models.Message, {
+      as: 'user',
+      foreignKey: {
+        fieldName: 'userId',
+        allowNull: false,
+      },
+    });
   };
 
   return User;
