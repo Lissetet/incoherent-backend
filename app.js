@@ -1,18 +1,18 @@
-'use strict';
+"use strict";
 
 // load modules
-require('dotenv').config();
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
+require("dotenv").config();
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
 
-const db = require('./models');
-const userRoutes = require('./routes/users');
-const gameRoutes = require('./routes/games');
-const cardRoutes = require('./routes/cards');
-const indexRoutes = require('./routes/index');
-const { notFound, globalError } = require('./middleware/errors');
-const { testConnection } = require('./middleware/utils');
+const db = require("./models");
+const userRoutes = require("./routes/users");
+const gameRoutes = require("./routes/games");
+const cardRoutes = require("./routes/cards");
+const indexRoutes = require("./routes/index");
+const { notFound, globalError } = require("./middleware/errors");
+const { testConnection } = require("./middleware/utils");
 
 // create the Express app
 const app = express();
@@ -24,12 +24,12 @@ app.use(cors());
 app.use(express.json());
 
 // setup morgan which gives us http request logging
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 
 // adds routes
-app.use('/api/users', userRoutes);
-app.use('/api/games', gameRoutes);
-app.use('/api/cards', cardRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/games", gameRoutes);
+app.use("/api/cards", cardRoutes);
 app.use(indexRoutes);
 
 // send 404 if no other route matched
@@ -39,18 +39,16 @@ app.use(notFound);
 app.use(globalError);
 
 // set our port
-app.set('port', process.env.PORT);
+app.set("port", process.env.PORT);
 
 // Test the database connection.
 testConnection();
 
-
-
 // ...
 
 // Sync models with database
-// // db.sequelize.sync({ force: true }).then(() => { //don't drop existing tables
-// db.sequelize.sync().then(() => {
+// db.sequelize.sync({ force: true }).then(() => { //don't drop existing tables
+// // db.sequelize.sync().then(() => {
 //   // start listening on our port
 //   const server = app.listen(app.get('port'), () => {
 //     console.log(`Express server is listening on port ${server.address().port}`);
@@ -60,6 +58,6 @@ testConnection();
 // });
 
 // start listening on our port
-const server = app.listen(app.get('port'), () => {
+const server = app.listen(app.get("port"), () => {
   console.log(`Express server is listening on port ${server.address().port}`);
 });

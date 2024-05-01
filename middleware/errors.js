@@ -1,13 +1,14 @@
-'use strict';
+"use strict";
 
-const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
+const enableGlobalErrorLogging =
+  process.env.ENABLE_GLOBAL_ERROR_LOGGING === "true";
 
 // send 404 if no other route matched
 exports.notFound = (req, res) => {
   res.status(404).json({
-    message: 'Route Not Found',
+    message: "Route Not Found",
   });
-}
+};
 
 // setup a global error handler
 exports.globalError = (err, req, res, next) => {
@@ -19,4 +20,4 @@ exports.globalError = (err, req, res, next) => {
     message: err.message,
     error: {},
   });
-}
+};
