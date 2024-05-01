@@ -9,15 +9,44 @@ const { sequelize } = require('sequelize');
 
 // Returns a list of 50 random cards
 router.get('/', asyncHandler(async (req, res) => {
-  const { category } = req.query;
+  const { categories } = req.query;
+  const where = categories ? { category: categories.split(',') } : {};
   const limit = req.query.limit ? parseInt(req.query.limit) : 50;
-  const where = category ? { category } : {};
+
   const cards = await Card.findAll({
     order: sequelize.random(),
     where, 
     limit
   });
+
   res.json(cards);
+}));
+
+// Return a random card
+router.get('/random', authenticateUser, asyncHandler(async (req, res) => {
+  const { currentUser } = req
+  if (!currentUser?.admin) {
+    res.status(403).end()
+  }
+
+  const { gameId, categories } = req.query;
+  const { usedCards } = await Game.findByPk(gameId);
+
+  const where = {
+    ...(usedCards ? { id: { [sequelize.Op.notIn]: usedCards } } : {}),
+    ...(categories ? { category: { [Op.in]: categories.split(',') } } : {}),
+  };
+
+  const card = await Card.findOne({
+    order: sequelize.random(),
+    where
+  });
+
+  if (card) {
+    res.json(card);
+  } else {
+    res.status(404).json({ message: "No cards found" });
+  }
 }));
 
 // Creates a new card

@@ -54,7 +54,7 @@ module.exports = (sequelize) => {
         }
     },
     category: {
-        type: DataTypes.ENUM('kinky', 'party', 'family', 'custom'),
+        type: DataTypes.ENUM('kinky', 'party', 'popCulture', 'family', 'custom'),
         allowNull: false,
         validate: {
             notNull: {

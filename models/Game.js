@@ -32,22 +32,34 @@ module.exports = (sequelize) => {
             }
         }
     },
-    keepScore: {
+    interactive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
         validate: {
             notNull: {
-                msg: 'A keepScore value is required'
+                msg: 'An interactive value is required'
             },
             notEmpty: {
-                msg: 'Please provide a keepScore value'
+                msg: 'Please provide an interactive value'
             },
             isBoolean(value) {
                 if (typeof value !== 'boolean') {
-                    throw new Error('keepScore must be a boolean value');
+                    throw new Error('Interactive must be a boolean value');
                 }
             }
+        }
+    },
+    categories: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: true,
+        defaultValue: [],
+        validate: {
+            isArray(value) {
+                if (!Array.isArray(value)) {
+                    throw new Error('cardTypes must be an array of strings');
+                }
+            }, 
         }
     },
     usedCards: {

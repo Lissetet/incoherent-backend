@@ -70,49 +70,6 @@ router.put('/:id', authenticateUser, asyncHandler(async (req, res) => {
   }
 }));
 
-// Adds a card to a game's usedCards array and returns new card
-router.put('/:id/addPlay', authenticateUser, asyncHandler(async (req, res) => {
-  const game = await Game.findByPk(req.params.id);
-  const { currentUser } = req
-  if (!game) {
-    res.status(404).json({ message: "Game not found" });
-  }
-  if (currentUser.id !== game.userId) {
-    res.status(403).end()
-  }
-
-  const { category } = game
-  const where = category ? { category } : {}
-  const { lastCardId, scoreUpdate } = req.body;
-
-  game.usedCards.push(lastCardId);
-  if (game.keepScore) {
-    game.score += scoreUpdate;
-  }
-  const card = await Card.findOne({
-    where: {
-      id: {
-        [Op.notIn]: game.usedCards,
-      },
-      ...where,
-    },
-    order: [
-      sequelize.random(),
-    ],
-  });
-
-  if (!card) {
-    game.status = 'completed';
-  }
-  await game.save();
-
-  if (card) {
-    res.json(card);
-  } else {
-    res.status(204).json({ message: "No more cards" });
-  }
-}));
-
 // Deletes a game
 router.delete('/:id', authenticateUser, asyncHandler(async (req, res) => {
   const game = await Game.findByPk(req.params.id);
