@@ -53,13 +53,18 @@ module.exports = (sequelize) => {
       },
       categories: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: true,
-        defaultValue: [],
+        allowNull: false,
         validate: {
           isArray(value) {
             if (!Array.isArray(value)) {
               throw new Error("cardTypes must be an array of strings");
             }
+          },
+          notEmpty: {
+            msg: "Please provide at least one category",
+          },
+          notNull: {
+            msg: "At least one category is required",
           },
         },
       },

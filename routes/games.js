@@ -22,21 +22,6 @@ router.get(
   })
 );
 
-// Returns a game by ID for the authenticated user
-router.get(
-  "/:id",
-  authenticateUser,
-  asyncHandler(async (req, res) => {
-    const game = await Game.findOne({
-      where: {
-        id: req.params.id,
-        userId: req.currentUser.id,
-      },
-    });
-    game ? res.json(game) : res.status(404).end();
-  })
-);
-
 // Returns last played game for the authenticated user
 router.get(
   "/last",
@@ -52,12 +37,27 @@ router.get(
   })
 );
 
+// Returns a game by ID for the authenticated user
+router.get(
+  "/:id",
+  authenticateUser,
+  asyncHandler(async (req, res) => {
+    console.log(authenticateUser);
+    const game = await Game.findOne({
+      where: {
+        id: req.params.id,
+        userId: req.currentUser.id,
+      },
+    });
+    game ? res.json(game) : res.status(404).end();
+  })
+);
+
 // Creates a new game
 router.post(
   "/",
   authenticateUser,
   asyncHandler(async (req, res) => {
-    console.log(req.body);
     try {
       const game = await Game.create(req.body);
       res
@@ -85,11 +85,16 @@ router.put(
     try {
       const game = await Game.findByPk(req.params.id);
       const { currentUser } = req;
+      console.log(req.body);
 
       if (game) {
         if (currentUser.id !== game.userId) {
           res.status(403).end();
         } else {
+          if (req.body.usedCardId) {
+            req.body.usedCards = [...game.usedCards, req.body.usedCardId];
+            delete req.body.usedCardId;
+          }
           await game.update(req.body);
           res.status(204).end();
         }

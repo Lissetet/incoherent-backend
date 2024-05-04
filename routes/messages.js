@@ -5,7 +5,6 @@ const router = express.Router();
 const { Message } = require("../models");
 const { authenticateUser } = require("../middleware/auth-user");
 const { asyncHandler } = require("../middleware/async-handler");
-const { Op, sequelize } = require("sequelize");
 
 // Returns all messages
 router.get(
@@ -45,7 +44,7 @@ router.post(
   "/",
   asyncHandler(async (req, res) => {
     try {
-      const message = await message.create(req.body);
+      const message = await Message.create(req.body);
       res.status(201).location(`/api/messages/${message.id}`).end();
     } catch (error) {
       if (error.name === "SequelizeValidationError") {

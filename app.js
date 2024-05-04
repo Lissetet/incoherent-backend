@@ -10,6 +10,7 @@ const db = require("./models");
 const userRoutes = require("./routes/users");
 const gameRoutes = require("./routes/games");
 const cardRoutes = require("./routes/cards");
+const messageRoutes = require("./routes/messages");
 const indexRoutes = require("./routes/index");
 const { notFound, globalError } = require("./middleware/errors");
 const { testConnection } = require("./middleware/utils");
@@ -30,6 +31,7 @@ app.use(morgan("dev"));
 app.use("/api/users", userRoutes);
 app.use("/api/games", gameRoutes);
 app.use("/api/cards", cardRoutes);
+app.use("/api/messages", messageRoutes);
 app.use(indexRoutes);
 
 // send 404 if no other route matched

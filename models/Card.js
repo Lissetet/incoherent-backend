@@ -71,8 +71,8 @@ module.exports = (sequelize) => {
             msg: "Please provide a category",
           },
           isIn: {
-            args: [["kinky", "party", "family", "custom"]],
-            msg: 'Category must be either "kinky", "party", "family", or "custom"',
+            args: [["kinky", "party", "family", "popCulture", "custom"]],
+            msg: 'Category must be either "kinky", "party", "popCulture", "family", or "custom"',
           },
         },
       },
